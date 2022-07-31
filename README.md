@@ -1,4 +1,11 @@
-n security - token validation and generation of token
+<h1 align="center">NodeJs Express Sentence building back-end application</h1>
+
+## Features 
+
+* API service intergrating with an XML service 
+* Express.js
+* MongoDB
+* JWT token security - token validation and generation of token
 * Input validation with Express validator
 * Error handling 
 * Logging of HTTP calls 
