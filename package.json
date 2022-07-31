@@ -13,6 +13,7 @@
     "express-xml-bodyparser": "^0.3.0",
     "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.0",
     "morgan": "^1.10.0",
     "morgan-json": "^1.1.0",
     "nvm": "^0.0.4",

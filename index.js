@@ -15,9 +15,13 @@ import bodyParser from "body-parser";
 import wordsRoute from "./routes/wordsRoute";
 import authenticationRouter from "./routes/authentication";
 import sentence from "./routes/sentenceRoute";
+import { connectToMongoDbServer } from "./utilities/mongoUtil";
 
 //Setup/initialize environment variables
 dotenv.config();
+
+//Setup mongoDb connection
+connectToMongoDbServer();
 
 const PORT = process.env.SERVER_PORT;
 const app = express();
