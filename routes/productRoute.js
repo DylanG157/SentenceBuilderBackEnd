@@ -3,18 +3,18 @@ import { authenticateToken } from "../middleware/jwt-authenticate.js";
 import { getMongoDbConnection } from "../utilities/mongoUtil";
 import { errorResponse } from "../models/errorResponse-model";
 
-const wordsRoute = express.Router();
+const productListRouter = express.Router();
 
-async function getListOfWords(req, res, next) {
+async function getListOfProducts(req, res, next) {
   try {
-    //Get the list of word types from the mongodb server
+    //get the list of all the saved sentences from mongodb
     let db = getMongoDbConnection();
     await db
-      .collection("listofwordtypes")
+      .collection("productschemas")
       .find({})
       .toArray(function (err, result) {
         if (err) throw err;
-        res.send(result);
+        res.send([result]);
       });
   } catch (error) {
     console.log(error);
@@ -22,7 +22,6 @@ async function getListOfWords(req, res, next) {
     res.send(errorResponse);
   }
 }
+productListRouter.get("/list", authenticateToken, getListOfProducts);
 
-wordsRoute.get("/list", authenticateToken, getListOfWords);
-
-export default wordsRoute;
+export default productListRouter;

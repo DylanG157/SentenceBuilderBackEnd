@@ -12,16 +12,33 @@ import {
 } from "./middleware/error-handler.js";
 import logger from "./middleware/logger.js";
 import bodyParser from "body-parser";
-import wordsRoute from "./routes/wordsRoute";
 import authenticationRouter from "./routes/authentication";
-import sentence from "./routes/sentenceRoute";
+import productListRouter from "./routes/productRoute";
 import { connectToMongoDbServer } from "./utilities/mongoUtil";
+import { getListOfAllProducts } from "./utilities/productRetrieval";
 
 //Setup/initialize environment variables
 dotenv.config();
 
 //Setup mongoDb connection
-connectToMongoDbServer();
+connectToMongoDbServer().then((response) => {
+  try {
+    console.log("Getting list of products");
+    getListOfAllProducts();
+  } catch (error) {
+    console.log(`Something went wrong with the product retrieval ${error}`);
+  }
+});
+
+//Used to get a list of all products, will run on a set timer and update the MongoDB with a list of all products
+// setInterval(function () {
+//   try {
+//     console.log("Getting list of products");
+//     getListOfAllProducts();
+//   } catch (error) {
+//     console.log(`Something went wrong with the product retrieval ${error}`);
+//   }
+// }, 30000);
 
 const PORT = process.env.SERVER_PORT;
 const app = express();
@@ -34,8 +51,7 @@ app.use(httpLogger); //Http logging middleware
 
 //Routes
 app.use("/authentication/", authenticationRouter);
-app.use("/words/", wordsRoute);
-app.use("/sentence/", sentence);
+app.use("/products/", productListRouter);
 
 //Error logging middleware
 app.use(errorLogger);
