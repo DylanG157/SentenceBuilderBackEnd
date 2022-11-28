@@ -10,13 +10,18 @@ async function getListOfAllProducts() {
     //Fetch the list of PNP URL's and update/insert products to MongoDB
     await db
       .collection("productUrlList")
-      .find({ store: "PNP" })
+      .find({ store: "PNP", disabledFlag: "N" })
       .toArray(function (err, result) {
         if (err) throw err;
         pnpUrlList = result;
         console.log(`Trying to get a list of all products`);
-        pnpUrlList.forEach(function (url) {
-          getPnpProductList(url.urlLink, url.category);
+        pnpUrlList.forEach(function (productConfig) {
+          getPnpProductList(
+            productConfig.urlLink,
+            productConfig.category,
+            productConfig.productPriceClassTag,
+            productConfig.store
+          );
         });
       });
   } catch (error) {
