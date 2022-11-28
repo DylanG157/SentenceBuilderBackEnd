@@ -24,7 +24,7 @@ dotenv.config();
 connectToMongoDbServer().then((response) => {
   try {
     console.log("Getting list of products");
-    //getListOfAllProducts();
+    getListOfAllProducts();
   } catch (error) {
     console.log(`Something went wrong with the product retrieval ${error}`);
   }
